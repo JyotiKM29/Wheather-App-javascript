@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Wheather App</title>
+</head>
+<body>
+   <div class="bg-gray-700 h-screen p-64 flex justify-center">
+    <div class="card flex flex-col justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 h-min w-max p-12">
+        <!-- Search box -->
+        <div class="searchBox flex flex-row justify-between space-x-6">
+            <label>
+                <input type="text" placeholder="Enter City Name" spellcheck="false" class="rounded-full px-12 py-4 w-96" />
+            </label>
+            <button class=" rounded-full p-1">
+                <img src="images/search.png" alt="search icon">
+            </button>
+        </div>
+        
+        <!-- img , temp and place in col -->
+        <div class="flex flex-col justify-center items-center  space-y-6">
+            <!-- Imgage -->
+            <img src="images/clouds.png" alt="climate img" class="h-40 w-40 ">
+            <!-- Temp -->
+            <h2 class="text-white font-bold text-6xl">0<sup>o</sup>C</h2>
+            <!-- City name -->
+            <h4 class="text-white font-light text-4xl">Germany</h4>
+        </div>
+
+        <!-- climate and wind speed -->
+        <div class="flex flex-row justify-center space-x-24 py-12">
+            <!-- climate -->
+            <div class="flex flex-row">
+                <img src="images/humidity.png" alt="humidity" class="h-12">
+                <div class="flex flex-col justify-center">
+                    <h6 class="text-white font-light text-2xl ml-4">100%</h6>
+                <h6 class="text-white font-light text-2xl ml-4">Humidity</h6>
+                </div>
+            </div>
+            <!-- Wind Speed-->
+            <div class="flex flex-row">
+                <img src="images/wind.png" alt="humidity" class="h-12">
+                <div class="flex flex-col justify-center">
+                    <h6 class="text-white font-light text-2xl ml-4 whitespace-nowrap">1.85 km/h</h6>
+                <h6 class="text-white font-light text-2xl ml-4 whitespace-nowrap">wind speed</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+   </div>
+</body>
+</html>
