@@ -1,56 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Wheather App</title>
-</head>
-<body>
-   <div class="bg-gray-700 h-screen p-64 flex justify-center">
-    <div class="card flex flex-col justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 h-min w-max p-12">
+  </head>
+  <body>
+    <div class="bg-gray-700 h-screen p-64 flex justify-center">
+      <div
+        class="card flex flex-col justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 h-min w-max p-12"
+      >
         <!-- Search box -->
         <div class="searchBox flex flex-row justify-between space-x-6">
-            <label>
-                <input type="text" placeholder="Enter City Name" spellcheck="false" class="rounded-full px-12 py-4 w-96" />
-            </label>
-            <button class=" rounded-full p-1">
-                <img src="images/search.png" alt="search icon">
-            </button>
+          <label class="search">
+            <input
+              type="text"
+              placeholder="Enter City Name"
+              spellcheck="false"
+              class="rounded-full px-12 py-4 w-96"
+            />
+          </label>
+          <button class="button rounded-full bg-white px-3 w-full">
+            <img src="images/search.png" alt="search icon" class="h-8 p-1" />
+          </button>
         </div>
-        
+        <!-- Error -->
+        <h2
+          id="error"
+          class="text-white flex flex-start justify-start px-6 py-2"
+        >
+          ⚠️ Enter City Name Correct
+        </h2>
         <!-- img , temp and place in col -->
-        <div class="flex flex-col justify-center items-center  space-y-6">
-            <!-- Imgage -->
-            <img src="images/clouds.png" alt="climate img" class="h-40 w-40 ">
-            <!-- Temp -->
-            <h2 class="text-white font-bold text-6xl">0<sup>o</sup>C</h2>
-            <!-- City name -->
-            <h4 class="text-white font-light text-4xl">Germany</h4>
+        <div
+          id="main"
+          class="flex flex-col justify-center items-center space-y-6"
+        >
+          <!-- Imgage -->
+          <img
+            src="images/rain.png"
+            alt="climate img"
+            class="weather-icon h-40 w-40"
+          />
+          <!-- Temp -->
+          <h2 class="temp text-white font-bold text-6xl">31 °F</h2>
+          <!-- City name -->
+          <h4 class="city text-white font-light text-4xl">Germany</h4>
         </div>
 
         <!-- climate and wind speed -->
-        <div class="flex flex-row justify-center space-x-24 py-12">
-            <!-- climate -->
-            <div class="flex flex-row">
-                <img src="images/humidity.png" alt="humidity" class="h-12">
-                <div class="flex flex-col justify-center">
-                    <h6 class="text-white font-light text-2xl ml-4">100%</h6>
-                <h6 class="text-white font-light text-2xl ml-4">Humidity</h6>
-                </div>
+        <div id="main2" class="flex flex-row justify-center space-x-24 py-12">
+          <!-- climate -->
+          <div class="flex flex-row">
+            <img src="images/humidity.png" alt="humidity" class="h-10" />
+            <div class="flex flex-col justify-center">
+              <h6 class="humidity text-white font-light text-2xl ml-4">100%</h6>
+              <h6 class="text-white font-light text-2xl ml-4">Humidity</h6>
             </div>
-            <!-- Wind Speed-->
-            <div class="flex flex-row">
-                <img src="images/wind.png" alt="humidity" class="h-12">
-                <div class="flex flex-col justify-center">
-                    <h6 class="text-white font-light text-2xl ml-4 whitespace-nowrap">1.85 km/h</h6>
-                <h6 class="text-white font-light text-2xl ml-4 whitespace-nowrap">wind speed</h6>
-                </div>
+          </div>
+          <!-- Wind Speed-->
+          <div class="flex flex-row">
+            <img src="images/wind.png" alt="humidity" class="h-10" />
+            <div class="flex flex-col justify-center">
+              <h6
+                class="wind text-white font-light text-2xl ml-4 whitespace-nowrap"
+              >
+                1.85 km/h
+              </h6>
+              <h6 class="text-white font-light text-2xl ml-4 whitespace-nowrap">
+                wind speed
+              </h6>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-   </div>
-</body>
+    <script>
+
+       const apiKey = "caaa079a04538143b03294429fb63d55";
+       const apiUrl = "https://api.openweathermap.org/data/2.5/weather?unit=metric&q=";
+
+       const searchBox = document.querySelector("input");
+       const searchBtn = document.querySelector("button");
+       const weatherIcon = document.querySelector('.weather-icon');
+       const main = document.querySelector('#main');
+
+
+       async function checkWeather(city ){
+         
+       const response = await  fetch(apiUrl + city + `&appid=${apiKey}`);
+          var data = await response.json();
+
+
+          if(response.status == '404'){
+              document.querySelector('#error').style.display = "block";
+              document.querySelector('#main').style.display = "none";
+              document.querySelector('#main2').style.display = "none";
+          }else{
+
+
+          
+          document.querySelector('.city').innerHTML = data.name;
+
+          document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + "°F";
+          document.querySelector('.humidity').innerHTML = data.main.humidity + "%";
+          document.querySelector('.wind').innerHTML = data.wind.speed + "Km/h";
+
+          
+
+          document.querySelector('#main').style.display = "flex";
+          document.querySelector('#main2').style.display = "flex";
+
+          if(data.weather[0].main == "Clouds"){
+              weatherIcon.src = "images/clouds.png";
+
+          }else if(data.wheather[0].main == "Clear"){
+              weatherIcon.src = "images/clear.png";
+          }else if(data.wheather[0].main == "Rain"){
+              weatherIcon.src = "images/rain.png";
+          }else if(data.wheather[0].main == "Drizzle"){
+              weatherIcon.src = "images/drizzle.png";
+          }else if(data.wheather[0].main == "Mist"){
+              weatherIcon.src = "images/mist.png";
+          }
+
+
+      }
+
+       }
+
+       searchBtn.addEventListener('click',() =>{
+          checkWeather(searchBox.value);
+       })
+
+
+
+      //  checkWeather('delhi');
+    </script>
+  </body>
 </html>

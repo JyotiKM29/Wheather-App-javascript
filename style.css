@@ -4,3 +4,11 @@
     box-sizing: border-box;
     
 }
+
+#main , #main2 {
+    display:none ;
+}
+
+#error{
+    display:none;
+}
